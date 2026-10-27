@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꿈드림 AI 진로진학 상담소 (Dream Compass AI)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font: Inter & Pretendard fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas for image download feature -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goToHome()">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
+                    <i class="fa-solid fa-compass text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 tracking-tight leading-none">꿈드림 AI</h1>
+                    <span class="text-xs text-primary-600 font-semibold tracking-wider">진로진학 상담소</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="openHistoryModal()" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>이전 진단 기록</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- [SCREEN 1] Home Screen -->
+        <section id="screen-home" class="fade-in py-8 sm:py-12 flex flex-col items-center text-center">
+            <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-primary-50 text-primary-700 text-xs font-semibold mb-6 shadow-sm border border-primary-100">
+                <i class="fa-solid fa-wand-magic-sparkles text-accent-500"></i>
+                <span>AI 기반 맞춤형 고교학점제 & 진로 설계</span>
+            </div>
+
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-2xl mb-6">
+                나만의 가능성을 발견하는 <br>
+                <span class="bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent">AI 지능형 진로 로드맵</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-slate-600 max-w-xl mb-10 leading-relaxed">
+                흥미, 성격, 좋아하는 교과목을 바탕으로 AI가 최적의 학과, 유망 직업군, 그리고 고등학교 선택 과목까지 완벽하게 추천해 드립니다.
+            </p>
+
+            <div class="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 border border-slate-100 mb-8 text-left">
+                <h3 class="font-bold text-slate-900 text-base mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-info text-primary-600"></i>
+                    <span>간단한 입력으로 시작하세요</span>
+                </h3>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-center space-x-3">
+                        <div class="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-xs">1</div>
+                        <span>기본 정보 및 관심 흥미 분야 선택 (다중)</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <div class="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-xs">2</div>
+                        <span>나의 성격 및 강점 특성 체크</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <div class="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-xs">3</div>
+                        <span>가장 흥미 있는 교과목 선택</span>
+                    </li>
+                </ul>
+            </div>
+
+            <button onclick="startDiagnosis()" class="w-full max-w-md py-4 px-8 rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 text-white font-bold text-base shadow-lg shadow-primary-500/30 hover:from-primary-700 hover:to-indigo-700 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
+                <span>진로 진단 시작하기</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </section>
+
+        <!-- [SCREEN 2] Step-by-Step Questionnaire Form -->
+        <section id="screen-form" class="hidden fade-in py-4">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span id="step-indicator" class="text-xs font-bold text-primary-600 uppercase tracking-wider">Step 1 of 3</span>
+                    <span id="step-percentage" class="text-xs font-medium text-slate-500">33% 완료</span>
+                </div>
+                <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-primary-600 to-indigo-500 transition-all duration-300 rounded-full" style="width: 33%;"></div>
+                </div>
+            </div>
+
+            <!-- Card Form Container -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 border border-slate-100">
+                
+                <!-- STEP 1: Basic Info & Interests -->
+                <div id="step-1-content" class="form-step">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">기본 정보 및 관심 분야</h2>
+                        <p class="text-sm text-slate-500">본인의 이름(선택)과 가장 흥미를 느끼는 분야를 <strong>최대 3개</strong>까지 선택해주세요.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">이름 (선택)</label>
+                            <input type="text" id="input-name" placeholder="홍길동" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">학년 / 구분</label>
+                            <select id="input-grade" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition text-sm bg-white">
+                                <option value="중학생">중학생</option>
+                                <option value="고등학교 1학년">고등학교 1학년</option>
+                                <option value="고등학교 2학년" selected>고등학교 2학년</option>
+                                <option value="고등학교 3학년">고등학교 3학년</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="block text-xs font-semibold text-slate-700 mb-2">흥미 분야 선택 (1개 이상 ~ 최대 3개)</label>
+                    <div id="interest-cards" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                </div>
+
+                <!-- STEP 2: Personality & Strengths -->
+                <div id="step-2-content" class="form-step hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">성격 및 강점 특성</h2>
+                        <p class="text-sm text-slate-500">평소 자신의 성향이나 가장 자신 있는 강점을 <strong>최대 2개</strong>까지 선택해주세요.</p>
+                    </div>
+
+                    <div id="personality-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                </div>
+
+                <!-- STEP 3: Favorite School Subjects -->
+                <div id="step-3-content" class="form-step hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">좋아하는 교과목</h2>
+                        <p class="text-sm text-slate-500">학교 수업 중 가장 흥미롭거나 성취감이 컸던 교과목을 <strong>최대 2개</strong>까지 선택해주세요.</p>
+                    </div>
+
+                    <div id="subject-cards" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                </div>
+
+                <!-- Form Navigation Buttons -->
+                <div class="flex items-center justify-between pt-6 border-t border-slate-100 mt-8">
+                    <button id="btn-prev" onclick="prevStep()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition hidden flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                    </button>
+                    <div class="ml-auto">
+                        <button id="btn-next" onclick="nextStep()" class="px-6 py-3 rounded-xl bg-primary-600 text-white font-semibold text-sm hover:bg-primary-700 transition shadow-lg shadow-primary-500/20 flex items-center space-x-2">
+                            <span>다음 단계</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- [SCREEN 3] AI Loading Screen -->
+        <section id="screen-loading" class="hidden fade-in py-16 flex flex-col items-center text-center">
+            <div class="relative w-24 h-24 mb-8">
+                <div class="absolute inset-0 rounded-full border-4 border-primary-100"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-primary-600 border-t-transparent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-primary-600 text-2xl">
+                    <i class="fa-solid fa-microchip animate-pulse"></i>
+                </div>
+            </div>
+
+            <h3 id="loading-status-text" class="text-xl font-bold text-slate-900 mb-2">학생의 데이터를 AI 알고리즘으로 분석 중입니다...</h3>
+            <p class="text-sm text-slate-500 max-w-sm mb-6">흥미 키워드, 성향, 과목 매칭 테이블을 대조하여 최적의 진로 패스를 구성하고 있습니다.</p>
+
+            <div class="w-full max-w-sm bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div id="loading-bar" class="h-full bg-primary-600 transition-all duration-300" style="width: 10%;"></div>
+            </div>
+        </section>
+
+        <!-- [SCREEN 4] Results Dashboard -->
+        <section id="screen-result" class="hidden fade-in py-4 space-y-6">
+            
+            <!-- Printable Area Container for Image Capture -->
+            <div id="result-printable-area" class="space-y-6 bg-slate-50 p-2 sm:p-4 rounded-3xl">
+                <!-- Top Summary Card -->
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-primary-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-indigo-200 mb-2">
+                                <i class="fa-solid fa-award text-amber-400"></i>
+                                <span>AI 맞춤 진로 분석 완료</span>
+                            </div>
+                            <h2 id="res-username-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight">학생 맞춤 진로 리포트</h2>
+                        </div>
+                    </div>
+
+                    <!-- Tags / Summary Pills -->
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+                        <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
+                            <i class="fa-solid fa-user text-primary-400"></i>
+                            <span id="res-tag-name">홍길동 (고2)</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
+                            <i class="fa-solid fa-heart text-rose-400"></i>
+                            <span id="res-tag-interests">IT/소프트웨어, 경영/경제</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-xs text-slate-200">
+                            <i class="fa-solid fa-bolt text-amber-400"></i>
+                            <span id="res-tag-traits">분석적, 창의적</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Major Recommendations Top 3 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-graduation-cap text-primary-600"></i>
+                        <span>추천 학과 Top 3 및 적합도</span>
+                    </h3>
+                    <div id="major-list-container" class="grid grid-cols-1 gap-4">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- High School Course Selection Tip & Career Roadmap -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-3xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-base">고교 학점제 추천 과목</h4>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">선택한 진로 계열과 연계하여 고등학교에서 이수하면 진학에 큰 도움이 되는 추천 과목입니다.</p>
+                            <div id="res-highschool-courses" class="flex flex-wrap gap-2 mb-4">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-2xl text-xs text-slate-600 border border-slate-100">
+                            <strong class="text-slate-900 block mb-1">💡 진로 교사 팁</strong>
+                            진로 선택 과목은 학생부 종합 전형에서 전공 적합성을 보여주는 핵심 지표입니다. 기초 과목을 탄탄히 다진 후 심화 과목으로 연계해 보세요.
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-rocket"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-base">미래 유망 직업군 및 역량</h4>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">AI가 분석한 미래 산업 트렌드 기반의 유망 직업과 핵심 필요 역량입니다.</p>
+                            <div id="res-future-jobs" class="space-y-2 mb-4 text-sm">
+                                <!-- Populated via JS -->
+                            </div>
+                        </div>
+                        <div class="bg-primary-50 p-3.5 rounded-2xl text-xs text-primary-900 border border-primary-100">
+                            <strong class="text-primary-700 block mb-1">🌟 성장 로드맵 제안</strong>
+                            관련 동아리 활동, 독서록 기록, 진로 탐색 보고서 작성 등에 본 리포트의 내용을 적극 활용해 보세요!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons Footer -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                <button onclick="restartDiagnosis()" class="py-3.5 px-4 rounded-2xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>처음으로 다시하기</span>
+                </button>
+                <button onclick="downloadResultImage()" id="btn-download-img" class="py-3.5 px-4 rounded-2xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-image"></i>
+                    <span>결과 이미지 다운로드</span>
+                </button>
+                <button onclick="saveCurrentResult()" class="py-3.5 px-4 rounded-2xl bg-primary-600 text-white font-bold text-sm hover:bg-primary-700 transition shadow-lg shadow-primary-500/20 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>기록 저장하기</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-lg text-slate-900 flex items-center space-x-2">
+                    <i class="fa-solid fa-clock-rotate-left text-primary-600"></i>
+                    <span>이전 진단 기록 저장소</span>
+                </h3>
+                <button onclick="closeHistoryModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="history-list-container" class="space-y-3 max-h-64 overflow-y-auto mb-4">
+                <!-- Dynamically loaded -->
+            </div>
+            <button onclick="clearHistory()" class="w-full py-2.5 rounded-xl border border-rose-200 text-rose-600 font-medium text-xs hover:bg-rose-50 transition">
+                기록 모두 삭제
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-medium transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center space-x-2">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-msg">알림 메시지</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200/60 mt-auto">
+        <p>© 2026 꿈드림 AI 진로진학 상담소 (Dream Compass AI). All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* ========================================================
+           DATA STRUCTURES & MAPPING TABLES
+           ======================================================== */
+        const INTERESTS_DATA = [
+            { id: 'it', name: 'IT / 소프트웨어', icon: 'fa-code', category: 'eng' },
+            { id: 'science', name: '자연 / 과학 / 바이오', icon: 'fa-dna', category: 'sci' },
+            { id: 'art', name: '예술 / 디자인 / 미디어', icon: 'fa-palette', category: 'art' },
+            { id: 'humanities', name: '인문 / 사회 / 심리', icon: 'fa-book-open', category: 'hum' },
+            { id: 'business', name: '경영 / 경제 / 금융', icon: 'fa-chart-pie', category: 'bus' },
+            { id: 'med', name: '의학 / 보건 / 간호', icon: 'fa-stethoscope', category: 'med' },
+            { id: 'edu', name: '교육 / 상담 / 공공', icon: 'fa-graduation-cap', category: 'edu' },
+            { id: 'engg', name: '공학 / 로봇 / 반도체', icon: 'fa-microchip', category: 'engg' }
+        ];
+
+        const PERSONALITY_DATA = [
+            { id: 'analytical', name: '분석적이고 논리적인 편', tag: '논리 분석' },
+            { id: 'creative', name: '창의적이고 아이디어가 많음', tag: '아이디어' },
+            { id: 'leadership', name: '리더십이 있고 주도적임', tag: '리더십' },
+            { id: 'cooperative', name: '협력적이고 공감 능력이 뛰어남', tag: '소통 공감' },
+            { id: 'independent', name: '독립적이고 탐구심이 강함', tag: '심층 탐구' },
+            { id: 'practical', name: '실용적이고 문제 해결을 즐김', tag: '실행력' }
+        ];
+
+        const SUBJECTS_DATA = [
+            { id: 'math', name: '수학 (대수, 미적분 등)', group: 'math' },
+            { id: 'sci', name: '과학 (물리/화학/생명과학)', group: 'sci' },
+            { id: 'kor', name: '국어 / 문학 / 화법', group: 'hum' },
+            { id: 'eng', name: '영어 / 외국어', group: 'lang' },
+            { id: 'soc', name: '사회 / 역사 / 윤리', group: 'soc' },
+            { id: 'info', name: '정보 / 컴퓨터 코딩', group: 'it' },
+            { id: 'art_sub', name: '미술 / 음악 / 체육', group: 'art' }
+        ];
+
+        const MAJOR_DATABASE = {
+            'it': {
+                name: '인공지능·소프트웨어학과',
+                matchBase: 94,
+                desc: '빅데이터, AI 알고리즘, 클라우드 컴퓨팅 및 웹/앱 서비스를 기획·개발하는 미래 핵심 학과입니다.',
+                jobs: ['AI 엔지니어', '소프트웨어 개발자', '데이터 사이언티스트', '정보보안 전문가'],
+                courses: ['인공지능 기초', '정보 과목', '심화 수학 I·II', '프로그래밍']
+            },
+            'sci': {
+                name: '생명과학·바이오공학과',
+                matchBase: 91,
+                desc: '유전자 편집, 바이오 제약, 친환경 신소재 개발 등 생명현상의 비밀을 밝히고 인류의 건강에 기여합니다.',
+                jobs: ['바이오 연구원', '생명공학 전문가', '제약 개발 연구원', '환경 컨설턴트'],
+                courses: ['생명과학 II', '화학 II', '고급 화학', '확률과 통계']
+            },
+            'art': {
+                name: '미디어콘텐츠·디자인학과',
+                matchBase: 92,
+                desc: '시각 디자인, UX/UI, 영상 콘텐츠 및 디지털 아트를 통해 사람들과 소통하고 시각적 가치를 창출합니다.',
+                jobs: ['UX/UI 디자이너', '콘텐츠 크리에이터', '브랜드 디자이너', 'UI 애니메이터'],
+                courses: ['미술 창작', '드로잉', '사회문제 탐구', '정보 문화']
+            },
+            'hum': {
+                name: '심리·사회·미디어학과',
+                matchBase: 89,
+                desc: '인간의 마음과 행동, 사회 구조와 현상을 분석하여 심리 상담 및 사회적 소통 방안을 연구합니다.',
+                jobs: ['임상 심리사', '미디어 저널리스트', '사회조사 분석가', '정책 연구원'],
+                courses: ['생활과 윤리', '사회문화', '확률과 통계', '심리학 (진로과목)']
+            },
+            'bus': {
+                name: '경영·경제·글로벌핀테크학과',
+                matchBase: 93,
+                desc: '기업 경영 전략, 금융 시장 분석, 데이터 기반 마케팅 및 글로벌 경제 흐름을 주도하는 리더를 양성합니다.',
+                jobs: ['금융 애널리스트', '경영 컨설턴트', '데이터 마케터', '핀테크 기획자'],
+                courses: ['경제', '확률과 통계', '정치와 법', '실용 영어']
+            },
+            'med': {
+                name: '의예·보건·AI헬스케어학과',
+                matchBase: 95,
+                desc: '최신 의료 기술과 바이오 정보학을 결합하여 질병 예방, 진단 및 환자 맞춤형 치료를 연구합니다.',
+                jobs: ['의사 / 보건 연구원', '의공학 엔지니어', '보건 행정가', '임상 데이터 분석가'],
+                courses: ['생명과학 II', '화학 II', '미적분', '고급 생명과학']
+            },
+            'edu': {
+                name: '교육공학·상담심리학과',
+                matchBase: 88,
+                desc: '미래 교육 환경에 맞는 교수 설계, 에듀테크 콘텐츠 기획 및 학생들의 진로·심리 상담을 전문적으로 연구합니다.',
+                jobs: ['에듀테크 기획자', '청소년 상담사', '진로진학 진학지도 교사', '교육 콘텐츠 개발자'],
+                courses: ['교육학 (진로과목)', '윤리와 사상', '사회문제 탐구', '화법과 작문']
+            },
+            'engg': {
+                name: '로봇·반도체신소재공학과',
+                matchBase: 92,
+                desc: '초정밀 반도체 소자, 지능형 로봇 시스템 및 미래 모빌리티 하드웨어를 설계하고 개발합니다.',
+                jobs: ['반도체 공정 엔지니어', '로봇 제어 연구원', '미래 모빌리티 설계자', '전기전자 기술자'],
+                courses: ['물리학 II', '기하', '미적분', '정보']
+            }
+        };
+
+        const DEFAULT_MAJORS = ['it', 'bus', 'sci'];
+
+        let currentStep = 1;
+        let formData = {
+            name: '',
+            grade: '고등학교 2학년',
+            interests: [],
+            personality: [],
+            subjects: []
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderStepOptions();
+            updateFormUI();
+        });
+
+        function goToHome() {
+            hideAllScreens();
+            document.getElementById('screen-home').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startDiagnosis() {
+            currentStep = 1;
+            formData = { name: '', grade: '고등학교 2학년', interests: [], personality: [], subjects: [] };
+            document.getElementById('input-name').value = '';
+            renderStepOptions();
+            hideAllScreens();
+            document.getElementById('screen-form').classList.remove('hidden');
+            updateFormUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideAllScreens() {
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-form').classList.add('hidden');
+            document.getElementById('screen-loading').classList.add('hidden');
+            document.getElementById('screen-result').classList.add('hidden');
+        }
+
+        function renderStepOptions() {
+            const interestContainer = document.getElementById('interest-cards');
+            interestContainer.innerHTML = INTERESTS_DATA.map(item => `
+                <div onclick="toggleSelection('interests', '${item.id}')" id="card-interest-${item.id}" class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex flex-col items-center text-center group select-none">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-600 group-hover:bg-primary-50 group-hover:text-primary-600 flex items-center justify-center text-lg mb-2 transition">
+                        <i class="fa-solid ${item.icon}"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-800">${item.name}</span>
+                </div>
+            `).join('');
+
+            const personalityContainer = document.getElementById('personality-cards');
+            personalityContainer.innerHTML = PERSONALITY_DATA.map(item => `
+                <div onclick="toggleSelection('personality', '${item.id}')" id="card-personality-${item.id}" class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex items-center justify-between select-none">
+                    <span class="text-sm font-semibold text-slate-800">${item.name}</span>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center transition check-circle">
+                        <i class="fa-solid fa-check text-[10px] text-white opacity-0"></i>
+                    </div>
+                </div>
+            `).join('');
+
+            const subjectContainer = document.getElementById('subject-cards');
+            subjectContainer.innerHTML = SUBJECTS_DATA.map(item => `
+                <div onclick="toggleSelection('subjects', '${item.id}')" id="card-subject-${item.id}" class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex flex-col items-center text-center group select-none">
+                    <span class="text-sm font-semibold text-slate-800">${item.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleSelection(type, id) {
+            const index = formData[type].indexOf(id);
+            let limit = (type === 'interests') ? 3 : 2;
+
+            if (index > -1) {
+                formData[type].splice(index, 1);
+            } else {
+                if (formData[type].length >= limit) {
+                    showToast(`최대 ${limit}개까지만 선택할 수 있습니다.`);
+                    return;
+                }
+                formData[type].push(id);
+            }
+            updateSelectionUI(type);
+        }
+
+        function updateSelectionUI(type) {
+            if (type === 'interests') {
+                INTERESTS_DATA.forEach(item => {
+                    const el = document.getElementById(`card-interest-${item.id}`);
+                    if (formData.interests.includes(item.id)) {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-primary-600 bg-primary-50/50 transition flex flex-col items-center text-center group select-none shadow-sm";
+                    } else {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex flex-col items-center text-center group select-none";
+                    }
+                });
+            } else if (type === 'personality') {
+                PERSONALITY_DATA.forEach(item => {
+                    const el = document.getElementById(`card-personality-${item.id}`);
+                    const circle = el.querySelector('.check-circle');
+                    const icon = circle.querySelector('i');
+                    if (formData.personality.includes(item.id)) {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-primary-600 bg-primary-50/50 transition flex items-center justify-between select-none shadow-sm";
+                        circle.className = "w-5 h-5 rounded-full bg-primary-600 border-2 border-primary-600 flex items-center justify-center transition check-circle";
+                        icon.classList.remove('opacity-0');
+                    } else {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex items-center justify-between select-none";
+                        circle.className = "w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center transition check-circle";
+                        icon.classList.add('opacity-0');
+                    }
+                });
+            } else if (type === 'subjects') {
+                SUBJECTS_DATA.forEach(item => {
+                    const el = document.getElementById(`card-subject-${item.id}`);
+                    if (formData.subjects.includes(item.id)) {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-primary-600 bg-primary-50/50 transition flex flex-col items-center text-center group select-none shadow-sm";
+                    } else {
+                        el.className = "cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-primary-500 bg-white transition flex flex-col items-center text-center group select-none";
+                    }
+                });
+            }
+        }
+
+        function nextStep() {
+            if (currentStep === 1) {
+                const nameInput = document.getElementById('input-name').value.trim();
+                formData.name = nameInput !== '' ? nameInput : '학생';
+                formData.grade = document.getElementById('input-grade').value;
+
+                if (formData.interests.length === 0) {
+                    showToast('관심 흥미 분야를 최소 1개 이상 선택해주세요.');
+                    return;
+                }
+            } else if (currentStep === 2) {
+                if (formData.personality.length === 0) {
+                    showToast('성격 및 강점 특성을 최소 1개 이상 선택해주세요.');
+                    return;
+                }
+            } else if (currentStep === 3) {
+                if (formData.subjects.length === 0) {
+                    showToast('좋아하는 교과목을 최소 1개 이상 선택해주세요.');
+                    return;
+                }
+                triggerAiAnalysis();
+                return;
+            }
+
+            currentStep++;
+            updateFormUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateFormUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function updateFormUI() {
+            document.querySelectorAll('.form-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${currentStep}-content`).classList.remove('hidden');
+
+            const percentages = ['33%', '66%', '100%'];
+            document.getElementById('step-indicator').innerText = `Step ${currentStep} of 3`;
+            document.getElementById('step-percentage').innerText = `${percentages[currentStep - 1]} 완료`;
+            document.getElementById('progress-bar-fill').style.width = percentages[currentStep - 1];
+
+            const btnPrev = document.getElementById('btn-prev');
+            if (currentStep === 1) {
+                btnPrev.classList.add('hidden');
+            } else {
+                btnPrev.classList.remove('hidden');
+            }
+
+            const btnNextText = document.querySelector('#btn-next span');
+            if (currentStep === 3) {
+                btnNextText.innerText = 'AI 분석 결과 보기';
+            } else {
+                btnNextText.innerText = '다음 단계';
+            }
+        }
+
+        function triggerAiAnalysis() {
+            hideAllScreens();
+            document.getElementById('screen-loading').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            let progress = 10;
+            const loadingBar = document.getElementById('loading-bar');
+            const statusText = document.getElementById('loading-status-text');
+
+            const statuses = [
+                "학생의 성향과 데이터를 분석 중입니다...",
+                "흥미 키워드와 고교 선택 과목 매칭 중...",
+                "AI 맞춤형 진로 추천 리포트를 생성하는 중..."
+            ];
+
+            const interval = setInterval(() => {
+                progress += 30;
+                loadingBar.style.width = progress + '%';
+                if (progress === 40) statusText.innerText = statuses[1];
+                if (progress === 70) statusText.innerText = statuses[2];
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        generateResults();
+                    }, 500);
+                }
+            }, 600);
+        }
+
+        function generateResults() {
+            hideAllScreens();
+            document.getElementById('screen-result').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.getElementById('res-username-title').innerText = `${formData.name} 학생의 맞춤 진로 리포트`;
+            document.getElementById('res-tag-name').innerText = `${formData.name} (${formData.grade})`;
+
+            const interestNames = formData.interests.map(id => INTERESTS_DATA.find(i => i.id === id)?.name || id).join(', ');
+            const traitNames = formData.personality.map(id => PERSONALITY_DATA.find(p => p.id === id)?.tag || id).join(', ');
+
+            document.getElementById('res-tag-interests').innerText = interestNames;
+            document.getElementById('res-tag-traits').innerText = traitNames;
+
+            let matchedKeys = [...formData.interests];
+            DEFAULT_MAJORS.forEach(k => {
+                if (!matchedKeys.includes(k) && matchedKeys.length < 3) {
+                    matchedKeys.push(k);
+                }
+            });
+            matchedKeys = matchedKeys.slice(0, 3);
+
+            const majorContainer = document.getElementById('major-list-container');
+            majorContainer.innerHTML = matchedKeys.map((key, idx) => {
+                const majorInfo = MAJOR_DATABASE[key] || MAJOR_DATABASE['it'];
+                const matchScore = majorInfo.matchBase - (idx * 3);
+                const rankLabels = ['1순위 추천', '2순위 추천', '3순위 추천'];
+                const rankColors = ['bg-primary-600 text-white', 'bg-indigo-100 text-indigo-700', 'bg-slate-100 text-slate-700'];
+
+                return `
+                    <div class="bg-white rounded-3xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold ${rankColors[idx]}">${rankLabels[idx]}</span>
+                                <span class="text-xs text-slate-400">매칭 적합도</span>
+                            </div>
+                            <h4 class="text-xl font-extrabold text-slate-900 mb-2">${majorInfo.name}</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">${majorInfo.desc}</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${majorInfo.jobs.map(job => `<span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium"><i class="fa-solid fa-briefcase text-primary-600 mr-1"></i>${job}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="flex md:flex-col items-center justify-between md:justify-center border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-xs font-semibold text-slate-400 md:mb-1">적합 퍼센티지</span>
+                            <div class="text-3xl font-extrabold text-primary-600">${matchScore}%</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const primaryMajor = MAJOR_DATABASE[matchedKeys[0]] || MAJOR_DATABASE['it'];
+            
+            document.getElementById('res-highschool-courses').innerHTML = primaryMajor.courses.map(c => `
+                <span class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-100 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-check text-emerald-600"></i>
+                    <span>${c}</span>
+                </span>
+            `).join('');
+
+            document.getElementById('res-future-jobs').innerHTML = primaryMajor.jobs.map(job => `
+                <div class="flex items-center space-x-2.5 text-slate-700">
+                    <i class="fa-solid fa-circle-check text-primary-600 text-xs"></i>
+                    <span class="font-medium">${job} (미래 유망 직업군)</span>
+                </div>
+            `).join('');
+        }
+
+        function downloadResultImage() {
+            const btn = document.getElementById('btn-download-img');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>이미지 생성 중...</span>`;
+            btn.disabled = true;
+
+            const printableArea = document.getElementById('result-printable-area');
+
+            html2canvas(printableArea, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#f8fafc'
+            }).then(canvas => {
+                const imageURL = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imageURL;
+                link.download = `${formData.name}_진로진학리포트.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast('진로 리포트가 이미지로 성공적으로 다운로드되었습니다!');
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast('이미지 다운로드 중 오류가 발생했습니다.');
+            });
+        }
+
+        function saveCurrentResult() {
+            const historyItem = {
+                date: new Date().toLocaleDateString(),
+                name: formData.name,
+                grade: formData.grade,
+                interests: formData.interests.map(id => INTERESTS_DATA.find(i => i.id === id)?.name || id)
+            };
+
+            let history = JSON.parse(localStorage.getItem('dream_compass_history') || '[]');
+            history.unshift(historyItem);
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('dream_compass_history', JSON.stringify(history));
+
+            showToast('진단 결과가 브라우저에 안전하게 저장되었습니다!');
+        }
+
+        function openHistoryModal() {
+            const history = JSON.parse(localStorage.getItem('dream_compass_history') || '[]');
+            const container = document.getElementById('history-list-container');
+
+            if (history.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">저장된 이전 진단 기록이 없습니다.</p>`;
+            } else {
+                container.innerHTML = history.map((item, idx) => `
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs">
+                        <div>
+                            <span class="font-bold text-slate-900 block mb-0.5">${item.name} (${item.grade})</span>
+                            <span class="text-slate-500">${item.date} · ${item.interests.join(', ')}</span>
+                        </div>
+                        <span class="px-2 py-1 rounded-lg bg-primary-50 text-primary-600 font-semibold">완료</span>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('history-modal').classList.remove('hidden');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('history-modal').classList.add('hidden');
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('dream_compass_history');
+            openHistoryModal();
+            showToast('모든 기록이 삭제되었습니다.');
+        }
+
+        function restartDiagnosis() {
+            goToHome();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
